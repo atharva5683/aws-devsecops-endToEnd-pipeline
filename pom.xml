@@ -71,7 +71,7 @@
     #By ASecurityGuru
     #5/12/2022 11:14 AM IST
 -->
-                <plugin>
+         <plugin>
            <groupId>io.snyk</groupId>
            <artifactId>snyk-maven-plugin</artifactId>
            <version>2.3.0</version>
