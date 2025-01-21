@@ -15,21 +15,21 @@ phases:
 
       # Quality Gates for Static Application Security Scan(SAST) using SonarCloud
       - sleep 5
-      - |
-        quality_status=$(curl -s -u $TOKEN: https://sonarcloud.io/api/qualitygates/project_status?projectKey=javaprojectaws | jq -r '.projectStatus.status')
-        echo "SonarCloud analysis status is $quality_status"
+      - |-
+          quality_status=$(curl -s -u $TOKEN: https://sonarcloud.io/api/qualitygates/project_status?projectKey=javaprojectaws | jq -r '.projectStatus.status')
+          echo "SonarCloud analysis status is $quality_status"
         # Uncomment and use this if you want to exit in case of an error
         # if [ $quality_status = "ERROR" ] ; then exit 1; fi
 
       # Software Composition Analysis Scan (SCA scan) using Snyk
-     - |
-        apt-get update
-        apt-get -y install maven 
-        SNYK_TOKEN=$SNYK
-        export SNYK_TOKEN
-        snyk auth
-        mvn snyk:test -fn 
-        snyk monitor
+      - |-
+          apt-get update
+          apt-get -y install maven 
+          SNYK_TOKEN=$SNYK
+          export SNYK_TOKEN
+          snyk auth
+          mvn snyk:test -fn 
+          snyk monitor
 
       # Dynamic Application Security Scan (DAST scan) using OWASP ZAP
      # - |
