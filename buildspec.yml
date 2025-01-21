@@ -1,7 +1,7 @@
 version: 0.2
 env:
   secrets-manager:
-   # TOKEN: Sonar:Sonar
+    TOKEN: Sonar:Sonar
     SNYK: Snyk:Snyk
 phases:
   install:
@@ -11,18 +11,18 @@ phases:
   build:
     commands:
       # Static Application Security Scan (SAST scan) using SonarCloud
-    #  - mvn verify sonar:sonar -Dsonar.projectKey=javaprojectawscicd -Dsonar.organization=javaprojectawscicd -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=$TOKEN
+      - mvn verify sonar:sonar -Dsonar.projectKey=javaprojectawscicd -Dsonar.organization=javaprojectawscicd -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=$TOKEN
 
       # Quality Gates for Static Application Security Scan(SAST) using SonarCloud
-    #  - sleep 5
-    #  - |
-     #   quality_status=$(curl -s -u $TOKEN: https://sonarcloud.io/api/qualitygates/project_status?projectKey=javaprojectaws | jq -r '.projectStatus.status')
-      #  echo "SonarCloud analysis status is $quality_status"
+      - sleep 5
+      - |
+        quality_status=$(curl -s -u $TOKEN: https://sonarcloud.io/api/qualitygates/project_status?projectKey=javaprojectaws | jq -r '.projectStatus.status')
+        echo "SonarCloud analysis status is $quality_status"
         # Uncomment and use this if you want to exit in case of an error
         # if [ $quality_status = "ERROR" ] ; then exit 1; fi
 
       # Software Composition Analysis Scan (SCA scan) using Snyk
-    #  - |
+     - |
         apt-get update
         apt-get -y install maven 
         SNYK_TOKEN=$SNYK
