@@ -1,43 +1,15 @@
 version: 0.2
-env:
-  secrets-manager:
-    TOKEN: Sonar:Sonar
 phases:
-  install:
-    runtime-versions:
-      java: latest
   build:
     commands:
-      # Static Application Security Scan (SAST scan) using SonarCloud
-
-      # Update packages and install dependencies
-      - apt-get update
-      - apt-get -y install wget default-jdk
-
-      # Fetch the latest OWASP ZAP release dynamically
-      - ZAP_VERSION=$(curl -s https://api.github.com/repos/zaproxy/zaproxy/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
-      - ZAP_TAR="ZAP_${ZAP_VERSION}_Linux.tar.gz"
-      - DOWNLOAD_URL="https://github.com/zaproxy/zaproxy/releases/download/${ZAP_VERSION}/${ZAP_TAR}"
-
-      # Download and extract OWASP ZAP
-      - wget $DOWNLOAD_URL -O $ZAP_TAR
-      - if [ $? -ne 0 ]; then
-          echo "Error: Unable to download OWASP ZAP from $DOWNLOAD_URL";
-          exit 1;
-        fi
-
-      - tar -xvf $ZAP_TAR || { echo "Error: Failed to extract $ZAP_TAR"; exit 1; }
-
-      # Change directory and run OWASP ZAP
-      - ZAP_DIR=$(basename $ZAP_TAR .tar.gz)
-      - cd $ZAP_DIR || { echo "Error: Directory $ZAP_DIR not found"; exit 1; }
-
-      - ./zap.sh -cmd -quickurl https://www.example.com -quickprogress -quickout ../zap_report.html || {
-          echo "Error: Failed to execute OWASP ZAP"; exit 1;
-        }
-
-      - echo "ZAP report generated: $(realpath ../zap_report.html)"
-
+    - |-
+        apt-get update
+        apt-get -y install wget
+        apt-get -y install default-jdk
+        wget https://github.com/zaproxy/zaproxy/releases/download/v2.14.0/ZAP_2.14.0_Linux.tar.gz
+        tar -xvf ZAP_2.14.0_Linux.tar.gz
+        cd ZAP_2.14.0
+        ./zap.sh -cmd -quickurl https://www.example.com -quickprogress -quickout ../zap_report.html 
 artifacts:
   files:
     - zap_report.html
