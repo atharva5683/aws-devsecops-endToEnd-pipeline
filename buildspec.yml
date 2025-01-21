@@ -3,7 +3,6 @@ env:
   secrets-manager:
     TOKEN: Sonar:Sonar
     SNYK: Snyk:Snyk
-
 phases:
   install:
     runtime-versions:
