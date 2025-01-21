@@ -2,7 +2,6 @@ version: 0.2
 env:
     secrets-manager:
       TOKEN: Sonar:Sonar
-      Snky: Snky:Snky
 phases:
   install:
     runtime-versions:
@@ -26,7 +25,7 @@ phases:
      - |-
           apt-get update
           apt-get -y install maven 
-          SNYK_TOKEN=$Snky
+          SNYK_TOKEN=860c8645-7973-40ae-a13f-d794afa6837d
           export SNYK_TOKEN
           mvn snyk:test -fn 
 
