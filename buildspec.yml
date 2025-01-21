@@ -2,7 +2,7 @@ version: 0.2
 env:
   secrets-manager:
     TOKEN: Sonar:Sonar
-    SNKY: Snky:Snky
+    SNKY: Snky1:Snky
 
 phases:
   install:
