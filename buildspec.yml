@@ -52,6 +52,6 @@ phases:
         # Display the path to the generated report
       #  echo "ZAP report generated: $(realpath ../zap_report.html)"
 
-artifacts:
-  files:
-    - zap_report.html
+#artifacts:
+ # files:
+  #  - zap_report.html
