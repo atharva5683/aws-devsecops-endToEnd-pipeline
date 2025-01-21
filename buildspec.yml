@@ -32,23 +32,23 @@ phases:
 
       # Dynamic Application Security Scan (DAST scan) using OWASP ZAP
       - |-
-        # Update package lists and install necessary dependencies
+      # Update package lists and install necessary dependencies
         sudo apt-get update
         sudo apt-get -y install wget default-jdk
 
-        # Download the OWASP ZAP 2.16.0 Linux tarball
+      # Download the OWASP ZAP 2.16.0 Linux tarball
         wget https://github.com/zaproxy/zaproxy/releases/download/v2.16.0/ZAP_2.16.0_Linux.tar.gz
 
-        # Extract the downloaded tarball
+      # Extract the downloaded tarball
         tar -xvf ZAP_2.16.0_Linux.tar.gz
 
-        # Navigate to the ZAP directory
+      # Navigate to the ZAP directory
         cd ZAP_2.16.0
 
-        # Run OWASP ZAP in command-line mode
+      # Run OWASP ZAP in command-line mode
         ./zap.sh -cmd -quickurl https://www.example.com -quickprogress -quickout ../zap_report.html
 
-        # Display the path to the generated report
+      # Display the path to the generated report
         echo "ZAP report generated: $(realpath ../zap_report.html)"
 
 artifacts:
