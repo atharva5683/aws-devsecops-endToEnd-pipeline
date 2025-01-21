@@ -7,51 +7,35 @@ phases:
   install:
     runtime-versions:
       java: latest
-
   build:
     commands:
       # Static Application Security Scan (SAST scan) using SonarCloud
       - mvn verify sonar:sonar -Dsonar.projectKey=javaprojectawscicd -Dsonar.organization=javaprojectawscicd -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=$TOKEN
 
-      # Quality Gates for Static Application Security Scan(SAST) using SonarCloud
+      # Quality Gates for Static Application Security Scan (SAST) using SonarCloud
       - sleep 5
       - |-
           quality_status=$(curl -s -u $TOKEN: https://sonarcloud.io/api/qualitygates/project_status?projectKey=javaprojectaws | jq -r '.projectStatus.status')
           echo "SonarCloud analysis status is $quality_status"
-        # Uncomment and use this if you want to exit in case of an error
-        # if [ $quality_status = "ERROR" ] ; then exit 1; fi
+          # Uncomment and use this if you want to exit in case of an error
+          # if [ "$quality_status" = "ERROR" ]; then exit 1; fi
 
       # Software Composition Analysis Scan (SCA scan) using Snyk
-      - |-
-          apt-get update
-          apt-get -y install maven 
-          SNYK_TOKEN=$SNYK
-          export SNYK_TOKEN
-          snyk auth
-          mvn snyk:test -fn 
-          snyk monitor
+      - apt-get update
+      - apt-get -y install maven
+      - export SNYK_TOKEN=$SNYK
+      - snyk auth
+      - mvn snyk:test -fn
+      - snyk monitor
 
       # Dynamic Application Security Scan (DAST scan) using OWASP ZAP
-      - |
-      # Update package lists and install necessary dependencies
-        sudo apt-get update
-        sudo apt-get -y install wget default-jdk
-
-      # Download the OWASP ZAP 2.16.0 Linux tarball
-        wget https://github.com/zaproxy/zaproxy/releases/download/v2.16.0/ZAP_2.16.0_Linux.tar.gz
-
-      # Extract the downloaded tarball
-        tar -xvf ZAP_2.16.0_Linux.tar.gz
-
-      # Navigate to the ZAP directory
-        cd ZAP_2.16.0
-
-      # Run OWASP ZAP in command-line mode
-        ./zap.sh -cmd -quickurl https://www.example.com -quickprogress -quickout ../zap_report.html
-
-      # Display the path to the generated report
-        echo "ZAP report generated: $(realpath ../zap_report.html)"
-
+      - sudo apt-get update
+      - sudo apt-get -y install wget default-jdk
+      - wget https://github.com/zaproxy/zaproxy/releases/download/v2.16.0/ZAP_2.16.0_Linux.tar.gz
+      - tar -xvf ZAP_2.16.0_Linux.tar.gz
+      - cd ZAP_2.16.0
+      - ./zap.sh -cmd -quickurl https://www.example.com -quickprogress -quickout ../zap_report.html
+      - echo "ZAP report generated: $(realpath ../zap_report.html)"
 artifacts:
   files:
     - zap_report.html
