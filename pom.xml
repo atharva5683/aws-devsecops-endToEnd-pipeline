@@ -71,13 +71,15 @@
     #By ASecurityGuru
     #5/12/2022 11:14 AM IST
 -->
-         <plugin>
-           <groupId>io.snyk</groupId>
-           <artifactId>snyk-maven-plugin</artifactId>
-           <version>2.3.0</version>
-           <inherited>false</inherited>
-           <configuration>
-             <org>atharvakumbhar669</org>
-           </configuration>
-         </plugin>
+        <plugin>
+          <groupId>io.snyk</groupId>
+          <artifactId>snyk-maven-plugin</artifactId>
+          <version>2.3.0</version>
+          <inherited>false</inherited>
+          <configuration>
+            <org>atharvakumbhar669</org>
+          </configuration>
+        </plugin>
+       </plugins>
+       </build>
 </project>
