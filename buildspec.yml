@@ -1,7 +1,7 @@
 version: 0.2
 env:
     secrets-manager:
-      TOKEN: firstSecret:tokenForSonar
+      TOKEN: Sonar:Sonar
 phases:
   install:
     runtime-versions:
@@ -10,7 +10,7 @@ phases:
     commands:
 
 #Static Application Security Scan (SAST scan) using SonarCloud
-     - mvn verify sonar:sonar -Dsonar.projectKey=javaprojectaws -Dsonar.organization=javaprojectaws -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=$TOKEN 
+     - mvn verify sonar:sonar -Dsonar.projectKey=javaprojectawscicd -Dsonar.organization=javaprojectawscicd -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=$TOKEN 
 
 #Quality Gates for Static Application Security Scan(SAST) using SonarCloud
 
